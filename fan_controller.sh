@@ -110,11 +110,14 @@ if [ -z "$(which megacli)" ]; then
 fi
 
 # Only Dell motherboards supported for now.
+CTRL_MODE=""
 SYS_MANUFACTURER="$(dmidecode --string "baseboard-manufacturer")"
 if [ -z "$SYS_MANUFACTURER" ]; then
     echo "Unable to detected system manufacturer, continuing ..."
-elif [[ "$SYS_MANUFACTURER" != "Dell "* ]]; then
-    echo "System manufacturer $SYS_MANUFACTURER unsupported, idling ..."
+elif [[ "$SYS_MANUFACTURER" == "Dell Inc." ]]; then
+    CTRL_MODE=Dell
+else
+    echo "System manufacturer '$SYS_MANUFACTURER' unsupported, idling ..."
     tail -f /dev/null
 fi
 
