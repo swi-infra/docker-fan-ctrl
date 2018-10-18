@@ -109,6 +109,15 @@ if [ -z "$(which megacli)" ]; then
     MEGACLI=0
 fi
 
+# Only Dell motherboards supported for now.
+SYS_MANUFACTURER="$(dmidecode --string "baseboard-manufacturer")"
+if [ -z "$SYS_MANUFACTURER" ]; then
+    echo "Unable to detected system manufacturer, continuing ..."
+elif [[ "$SYS_MANUFACTURER" != "Dell "* ]]; then
+    echo "System manufacturer $SYS_MANUFACTURER unsupported, idling ..."
+    tail -f /dev/null
+fi
+
 #
 # Trap if CTRL+C is pressed.  If it is, we will call our exit_graceful()
 # function to relinquish control back to the iDRAC Firmware.

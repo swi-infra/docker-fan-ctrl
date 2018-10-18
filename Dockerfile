@@ -2,7 +2,8 @@ FROM alpine
 
 RUN apk add --no-cache smartmontools \
                        lm_sensors \
-                       ipmitool
+                       ipmitool \
+                       dmidecode
 
 ADD fan_controller.sh /
 
